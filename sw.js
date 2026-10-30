@@ -1,6 +1,6 @@
 const CACHE='one-more-app-v2';
 const BASE=new URL('./',self.location.href);
-const FILES=['./','index.html','style.css','app.mjs','engine.mjs','install.mjs','reminders.mjs','push.mjs','words.txt','common.txt','puzzles.json','families.json','manifest.webmanifest','icons/icon-192.png','icons/icon-512.png'];
+const FILES=['./','index.html','style.css','app.mjs','engine.mjs','install.mjs','push.mjs','public-url.mjs','words.txt','common.txt','puzzles.json','families.json','manifest.webmanifest','icons/icon-192.png','icons/icon-512.png'];
 const ASSETS=new Set(FILES.map(path=>new URL(path,BASE).pathname));
 self.addEventListener('install',event=>{
   event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(FILES.map(path=>new URL(path,BASE).href))).then(()=>self.skipWaiting()));

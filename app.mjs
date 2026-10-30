@@ -1,7 +1,7 @@
 import {makeDictionary, dailyKey, puzzleNumber, chooseSeed} from './engine.mjs';
 import {initInstallable} from './install.mjs';
-import {initReminders} from './reminders.mjs';
 import {initPush} from './push.mjs';
+import {gameLink} from './public-url.mjs';
 const $=s=>document.querySelector(s);
 const $$=s=>[...document.querySelectorAll(s)];
 let dictionary,pools,day=dailyKey(),mode=['easy','medium','hard'].includes(location.hash.slice(1))?location.hash.slice(1):'easy',state,storageAvailable=true,toastTimer;
@@ -14,7 +14,6 @@ function toast(message){clearTimeout(toastTimer);$('#toast').textContent=message
 function modal(html){$('#modal-body').innerHTML=html;if(!$('#modal').open)$('#modal').showModal()}
 function closeModal(){$('#modal').close()}
 initInstallable({modal,toast});
-initReminders({modal,toast});
 initPush({modal});
 $('#modal-close').onclick=closeModal;
 $('#modal').addEventListener('click',e=>{if(e.target===$('#modal')){const r=e.target.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)closeModal()}});
@@ -75,7 +74,7 @@ function renderResult(){const n=state.chain.length-1;const ended=state.endedBy==
   $('#share-score').onclick=showShare;$('#try-next').onclick=()=>{freshDay();loadMode(mode==='easy'?'medium':mode==='medium'?'hard':'easy')};if($('#show-path'))$('#show-path').onclick=showPath;
 }
 function showPath(){const path=dictionary.best(current());modal(`<h2>${path.length?'One way forward.':'End of the chain.'}</h2><div class="solution">${[current(),...path].map(w=>esc(w.toUpperCase())).join(' → ')}</div>`)}
-const siteLink=()=>location.origin+location.pathname;
+const siteLink=gameLink;
 function shareText(){const n=state.chain.length-1;const icons=state.chain.slice(1).map((_,i)=>state.hints.includes(i+1)?'✧':'🟩').join('');return `One More + #${puzzleNumber(day)} · ${day}\n${mode[0].toUpperCase()+mode.slice(1)} · ${n} word${n===1?'':'s'} grown · ${current().length} letters\n${icons||'🌱'}${state.hints.length?'\n✧ = hint used':''}\nHow far can you grow?\n${siteLink()}#${mode}`}
 async function copyText(text,button){try{await navigator.clipboard.writeText(text);toast('Copied. Send a little challenge.');if(button)button.textContent='Copied ✓'}catch{toast('Select and copy the text below.');const node=$('#share-preview');if(node){const range=document.createRange();range.selectNodeContents(node);const selection=window.getSelection();selection.removeAllRanges();selection.addRange(range)}}}
 function showShare(){const text=shareText();modal(`<h2>Your result</h2><div class="share-preview" id="share-preview">${esc(text)}</div><div class="modal-actions"><button class="primary-button" id="copy-score">Copy result</button>${navigator.share?'<button class="secondary-button" id="native-share">Share…</button>':''}</div>`);$('#copy-score').onclick=()=>copyText(text,$('#copy-score'));if($('#native-share'))$('#native-share').onclick=async()=>{try{await navigator.share({title:'One More',text})}catch(e){if(e.name!=='AbortError')toast('Use Copy result to share.')}}}

@@ -1,3 +1,4 @@
+import {gameLink} from './public-url.mjs';
 export function initInstallable({modal,toast}) {
   let promptEvent;
   const button=document.querySelector('#install-app');
@@ -5,6 +6,7 @@ export function initInstallable({modal,toast}) {
   window.addEventListener('beforeinstallprompt',event=>{event.preventDefault();promptEvent=event;});
   window.addEventListener('appinstalled',()=>{promptEvent=null;button.textContent='App installed';toast('One More is on your device.');});
   button.addEventListener('click',async()=>{
+    if(location.hostname.endsWith('.chatgpt.site')){modal('<h2>Install the public game</h2><p>Open the shareable version of One More, then choose Install app.</p><div class="modal-actions"><a class="primary-button public-game-link" href="'+gameLink()+'" target="_blank" rel="noopener noreferrer">Open One More</a></div>');return;}
     if(installed()){modal('<h2>One More is installed.</h2><p>Open it from your Home Screen whenever you’re ready to play.</p>');return;}
     if(promptEvent){const event=promptEvent;promptEvent=null;await event.prompt();await event.userChoice;return;}
     const ios=/iPhone|iPad|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
