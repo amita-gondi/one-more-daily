@@ -1,0 +1,37 @@
+{
+  "source": "Princeton WordNet 3.0, via the NLTK WordNet corpus",
+  "source_url": "https://wordnet.princeton.edu/",
+  "corpus_url": "https://github.com/nltk/nltk_data/blob/gh-pages/packages/corpora/wordnet.zip",
+  "license": "WORDNET-LICENSE.txt",
+  "method": "Morphological base forms and derivational links. No synonym links. Curated -en derivations fill known gaps. Unknown families are allowed.",
+  "curated_derivations": [
+    [
+      "haste",
+      "hasten"
+    ],
+    [
+      "ripe",
+      "ripen"
+    ],
+    [
+      "wide",
+      "widen"
+    ],
+    [
+      "white",
+      "whiten"
+    ],
+    [
+      "loose",
+      "loosen"
+    ],
+    [
+      "awake",
+      "awaken"
+    ],
+    [
+      "worse",
+      "worsen"
+    ]
+  ]
+}

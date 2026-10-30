@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="application-name" content="One More">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="One More">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <meta name="description" content="Add a letter. Find a new root. A new word game every morning.">
+  <meta property="og:title" content="One More"><meta property="og:description" content="Add a letter. Find a new root.">
+  <title>One More</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='8' fill='%235f8757'/%3E%3Cpath d='M32 17v30M17 32h30' stroke='white' stroke-width='6'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css"><script type="module" src="app.mjs"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="site-header">
+      <button id="quick-help" class="icon-button" aria-label="How to play"><svg class="help-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 0 1 5 .4c0 1.9-2.5 2-2.5 3.6m0 3h.01"/></svg></button>
+      <a class="wordmark" href="./" aria-label="One More home">one more</a>
+      <div class="more-menu">
+        <button id="menu-toggle" class="icon-button" aria-label="Game menu" aria-expanded="false" aria-controls="game-menu"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="19" cy="12" r="1.3"/></svg></button>
+        <div id="game-menu" class="menu-panel" hidden>
+          <button id="shuffle" disabled>Shuffle letters</button>
+          <button id="hint" disabled>Hint</button>
+          <button id="finish" disabled>Give up</button>
+          <div class="menu-divider"></div>
+          <button id="help">How to play</button>
+          <button id="stats">Statistics</button>
+          <button id="menu-invite">Invite friends</button>
+          <button id="install-app">Install app</button>
+          <button id="daily-reminder">Daily reminder</button>
+          <div class="menu-meta"><span id="puzzle-label">Daily puzzle</span><span id="reset-countdown">New puzzles at 6 a.m. PT</span></div>
+        </div>
+      </div>
+    </header>
+    <main>
+      <div class="mode-list" role="tablist" aria-label="Difficulty">
+        <button class="mode active" data-mode="easy" role="tab" aria-selected="true">Easy<span class="mode-status" aria-hidden="true"></span></button>
+        <button class="mode" data-mode="medium" role="tab" aria-selected="false">Medium<span class="mode-status" aria-hidden="true"></span></button>
+        <button class="mode" data-mode="hard" role="tab" aria-selected="false">Hard<span class="mode-status" aria-hidden="true"></span></button>
+      </div>
+      <section id="game-panel" class="game-panel" aria-label="Daily word game" aria-busy="true">
+        <span class="visually-hidden"><span id="score">0</span> words added</span>
+        <div id="active-game">
+          <h1>Add a letter. Find a new root.</h1>
+          <div class="word-stage"><span id="word-caption" class="visually-hidden">Current word</span><div id="letter-tiles" class="letter-tiles" aria-label="Loading word"><span class="loading">Loading…</span></div></div>
+          <form id="word-form" autocomplete="off">
+            <label for="word-input" class="visually-hidden">Your next word</label>
+            <div class="answer-wrap"><div id="entry-tiles" class="letter-row" aria-hidden="true"></div><input id="word-input" type="text" placeholder="Your next word" inputmode="none" autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false" enterkeyhint="go" aria-describedby="feedback" disabled></div>
+            <div id="feedback" class="feedback" role="status" aria-live="polite"></div>
+          </form>
+        </div>
+        <div id="result" hidden></div>
+        <div id="chain-section" class="chain-section" hidden><span id="chain-caption" class="visually-hidden"></span><ol id="chain" class="chain" aria-label="Your word chain"></ol></div>
+      </section>
+<div id="keyboard" class="keyboard" aria-label="Letter keyboard"><div class="key-row"><button class="key" type="button" data-key="q" aria-label="Q" disabled>Q</button><button class="key" type="button" data-key="w" aria-label="W" disabled>W</button><button class="key" type="button" data-key="e" aria-label="E" disabled>E</button><button class="key" type="button" data-key="r" aria-label="R" disabled>R</button><button class="key" type="button" data-key="t" aria-label="T" disabled>T</button><button class="key" type="button" data-key="y" aria-label="Y" disabled>Y</button><button class="key" type="button" data-key="u" aria-label="U" disabled>U</button><button class="key" type="button" data-key="i" aria-label="I" disabled>I</button><button class="key" type="button" data-key="o" aria-label="O" disabled>O</button><button class="key" type="button" data-key="p" aria-label="P" disabled>P</button></div><div class="key-row"><button class="key" type="button" data-key="a" aria-label="A" disabled>A</button><button class="key" type="button" data-key="s" aria-label="S" disabled>S</button><button class="key" type="button" data-key="d" aria-label="D" disabled>D</button><button class="key" type="button" data-key="f" aria-label="F" disabled>F</button><button class="key" type="button" data-key="g" aria-label="G" disabled>G</button><button class="key" type="button" data-key="h" aria-label="H" disabled>H</button><button class="key" type="button" data-key="j" aria-label="J" disabled>J</button><button class="key" type="button" data-key="k" aria-label="K" disabled>K</button><button class="key" type="button" data-key="l" aria-label="L" disabled>L</button></div><div class="key-row"><button id="grow-button" class="key key-wide" type="submit" form="word-form" disabled>Enter</button><button class="key" type="button" data-key="z" aria-label="Z" disabled>Z</button><button class="key" type="button" data-key="x" aria-label="X" disabled>X</button><button class="key" type="button" data-key="c" aria-label="C" disabled>C</button><button class="key" type="button" data-key="v" aria-label="V" disabled>V</button><button class="key" type="button" data-key="b" aria-label="B" disabled>B</button><button class="key" type="button" data-key="n" aria-label="N" disabled>N</button><button class="key" type="button" data-key="m" aria-label="M" disabled>M</button><button id="delete-key" class="key key-wide" type="button" aria-label="Delete letter" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5h12v14H9L2 12 9 5Zm4 4 5 6m0-6-5 6"/></svg></button></div></div>
+    </main>
+  </div>
+  <dialog id="modal" aria-label="Game information"><button class="modal-close" id="modal-close" aria-label="Close dialog">×</button><div id="modal-body"></div></dialog>
+  <div class="toast" id="toast" role="status" hidden></div>
+</body>
+</html>
