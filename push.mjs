@@ -33,6 +33,8 @@ export async function initPush({modal}) {
     try{api=await prepare();}catch{const status=document.querySelector('#push-status');if(status)status.textContent='Couldn’t connect. Close this and try again later.';return;}
     const button=document.querySelector('#push-opt');if(!button)return;
     const paint=()=>{const enabled=api.User.PushSubscription.optedIn;const status=document.querySelector('#push-status');const action=document.querySelector('#push-opt');if(status)status.textContent=enabled?'Phone reminders are on.':'Reminders are off. You can turn them off again here.';if(action)action.textContent=enabled?'Turn off reminders':'Enable notifications';};
+    api.User.PushSubscription.addEventListener('change',paint);
+    document.querySelector('#modal').addEventListener('close',()=>api.User.PushSubscription.removeEventListener('change',paint),{once:true});
     paint();button.disabled=false;
     button.onclick=async()=>{
       button.disabled=true;
