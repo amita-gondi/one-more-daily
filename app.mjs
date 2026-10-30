@@ -1,6 +1,7 @@
 import {makeDictionary, dailyKey, puzzleNumber, chooseSeed} from './engine.mjs';
 import {initInstallable} from './install.mjs';
 import {initReminders} from './reminders.mjs';
+import {initPush} from './push.mjs';
 const $=s=>document.querySelector(s);
 const $$=s=>[...document.querySelectorAll(s)];
 let dictionary,pools,day=dailyKey(),mode=['easy','medium','hard'].includes(location.hash.slice(1))?location.hash.slice(1):'easy',state,storageAvailable=true,toastTimer;
@@ -14,6 +15,7 @@ function modal(html){$('#modal-body').innerHTML=html;if(!$('#modal').open)$('#mo
 function closeModal(){$('#modal').close()}
 initInstallable({modal,toast});
 initReminders({modal,toast});
+initPush({modal});
 $('#modal-close').onclick=closeModal;
 $('#modal').addEventListener('click',e=>{if(e.target===$('#modal')){const r=e.target.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)closeModal()}});
 function feedback(text,kind=''){$('#feedback').textContent=text;$('#feedback').className=`feedback ${kind}`}
